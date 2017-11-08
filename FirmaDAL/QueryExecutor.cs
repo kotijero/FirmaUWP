@@ -15,7 +15,7 @@ namespace FirmaDAL
         {
             get
             {
-                return "";
+                return "Data Source=DESKTOP-JT1KEIM;Initial Catalog=Firma;User ID=rpppuwp;Password=rpppuwp";
             }
         }
 
@@ -31,10 +31,15 @@ namespace FirmaDAL
                         using (SqlCommand cmd = conn.CreateCommand())
                         {
                             cmd.CommandText = queryText;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                return reader.GetSchemaTable();
-                            }
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            DataTable result = new DataTable();
+                            adapter.Fill(result);
+                            return result;
+                            
+                            //using (SqlDataReader reader = cmd.ExecuteReader())
+                            //{
+                            //    return reader.GetSchemaTable();
+                            //}
                         }
                     }
                     else

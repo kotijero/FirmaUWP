@@ -131,6 +131,12 @@
       <Version>6.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FirmaDAL\FirmaDAL.csproj">
+      <Project>{DA367024-E94D-4588-AB1D-D51AEBB4D558}</Project>
+      <Name>FirmaDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

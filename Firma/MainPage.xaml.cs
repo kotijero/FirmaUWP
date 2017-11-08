@@ -1,8 +1,11 @@
-﻿using System;
+﻿using FirmaDAL;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +25,31 @@ namespace Firma
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        ObservableCollection<Artikl> Artikli { get; } = new ObservableCollection<Artikl>();
         public MainPage()
         {
             this.InitializeComponent();
+            //Artikli.Clear();
+            //ArtiklDalProvider dalProvider = new ArtiklDalProvider();
+            //List<Artikl> result = dalProvider.FetchAll();
+            //foreach (var item in result)
+            //{
+            //    Artikli.Add(item);
+            //}
         }
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Artikli.Clear();
+            ArtiklDalProvider dalProvider = new ArtiklDalProvider();
+            LoadingIndicator.IsActive = true;
+            List<Artikl> result = await Task.Run(() => dalProvider.FetchAll());
+            LoadingIndicator.IsActive = false;
+            foreach (var item in result)
+            {
+                Artikli.Add(item);
+            }
+        }
+
+        
     }
 }

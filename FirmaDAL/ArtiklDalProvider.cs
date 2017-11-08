@@ -50,14 +50,15 @@ namespace FirmaDAL
                 {
                     Artikl artikl = new Artikl
                     {
-                        SifArtikla = (int)row["SifArtikla"],
-                        NazArtikla = (string)row["NazArtikla"],
-                        JedMjere = (string)row["JedMjere"],
-                        CijArtkila = (decimal)row["CijArtikla"],
-                        ZastUsluga = (bool)row["ZastUsluga"],
-                        SlikaArtikla = (byte[])row["SlikaArtikla"],
-                        TekstArtikla = (string)row["TekstArtikla"]
+                        SifArtikla = row["SifArtikla"].GetType() == typeof(DBNull) ? 0 : (int)row["SifArtikla"],
+                        NazArtikla = row["NazArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["NazArtikla"],
+                        JedMjere = row["JedMjere"].GetType() == typeof(DBNull) ? string.Empty : (string)row["JedMjere"],
+                        CijArtkila = row["CijArtikla"].GetType() == typeof(DBNull) ? (decimal)0.0 :(decimal)row["CijArtikla"],
+                        ZastUsluga = row["ZastUsluga"].GetType() == typeof(DBNull) ? false : (bool)row["ZastUsluga"],
+                        //SlikaArtikla = (byte[])row["SlikaArtikla"],
+                        TekstArtikla = row["TekstArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["TekstArtikla"]
                     };
+                    artiklList.Add(artikl);
                 }
                 
                 return artiklList;

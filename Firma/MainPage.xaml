@@ -7,7 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <TextBlock x:Name="TitleTextBlock"
+                   Text="Artikli"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Margin="24,0,0,24"/>
 
-    </Grid>
+            <ProgressRing x:Name="LoadingIndicator"/>
+            <ListView x:Name="ArtiklListView"
+                  ItemsSource="{x:Bind Artikli}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Text="{Binding Lookup}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </RelativePanel>
 </Page>
