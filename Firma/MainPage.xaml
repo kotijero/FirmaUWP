@@ -7,12 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="TitleTextBlock"
-                   Text="Artikli"
-                   Style="{StaticResource TitleTextBlockStyle}"
-                   Margin="24,0,0,24"/>
-        
-        
-    </RelativePanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    </Grid>
 </Page>

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{ADC2F42A-5C7F-4A7F-9C07-1EFBFE9B9DC4}</ProjectGuid>
+    <ProjectGuid>{DA25BBDE-277C-472C-B1F3-73C5963BCF3E}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Firma</RootNamespace>
@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -130,12 +130,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FirmaDAL\FirmaDAL.csproj">
-      <Project>{da367024-e94d-4588-ab1d-d51aebb4d558}</Project>
-      <Name>FirmaDAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

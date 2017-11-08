@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="712d99d5-c8d2-495f-8171-38932a8055a1"
+    Name="db05c250-9fad-47f6-bd0b-eb94aaec8851"
     Publisher="CN=cotti"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="712d99d5-c8d2-495f-8171-38932a8055a1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="db05c250-9fad-47f6-bd0b-eb94aaec8851" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Firma</DisplayName>
