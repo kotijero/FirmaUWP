@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Firma.Views.Artikl.ArtiklList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Firma.Views.Artikl"
+    xmlns:model="using:FirmaDAL"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!--<DataTemplate x:Key="ArtiklListView_DefaultItemTemplate"
+                      x:DataType="model:Artikl">
+            
+        </DataTemplate>-->
+        <ItemsPanelTemplate x:Key="ArtiklListView_ItemsPanelTemplate">
+            <ItemsWrapGrid Orientation="Horizontal"
+                           HorizontalAlignment="Center"/>
+        </ItemsPanelTemplate>
+        <DataTemplate x:Key="ArtiklListView_DefaultItemTemplate"
+                      x:DataType="model:Artikl">
+            <Grid>
+                <TextBlock Text="Naziv"
+                           FontStyle="Oblique"/>
+                <TextBlock Text="{Binding Lookup}"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="TitleTextBlock"
+                   Text="Artikli"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Margin="24,0,0,24"
+                       />
+
+        <ProgressRing x:Name="LoadingIndicator"
+                      Margin="24,0,0,24"
+                      RelativePanel.Below="TitleTextBlock"/>
+        <ListView x:Name="ArtiklListView"
+                  Margin="0,0,0,8"
+                  ItemsSource="{x:Bind Artikli}"
+                  ItemTemplate="{StaticResource ArtiklListView_DefaultItemTemplate}"
+                  RelativePanel.Below="TitleTextBlock"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  ItemClick="ArtiklListView_ItemClick"
+                  IsItemClickEnabled="True">
+        </ListView>
+
+    </RelativePanel>
+</Page>

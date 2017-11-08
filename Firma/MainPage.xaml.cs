@@ -37,19 +37,19 @@ namespace Firma
             //    Artikli.Add(item);
             //}
         }
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Artikli.Clear();
-            ArtiklDalProvider dalProvider = new ArtiklDalProvider();
-            LoadingIndicator.IsActive = true;
-            List<Artikl> result = await Task.Run(() => dalProvider.FetchAll());
-            LoadingIndicator.IsActive = false;
-            foreach (var item in result)
-            {
-                Artikli.Add(item);
-            }
+            
         }
 
-        
+        private void ArtikliButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Views.Artikl.ArtiklList));
+        }
+
+        private void DokumentiButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

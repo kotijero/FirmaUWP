@@ -3,28 +3,41 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Firma"
+    xmlns:model="using:FirmaDAL"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid>
-            <TextBlock x:Name="TitleTextBlock"
-                   Text="Artikli"
+        <TextBlock x:Name="TitleTextBlock"
+                   Text="FirmaUWP"
                    Style="{StaticResource TitleTextBlockStyle}"
-                   Margin="24,0,0,24"/>
-
-            <ProgressRing x:Name="LoadingIndicator"/>
-            <ListView x:Name="ArtiklListView"
-                  ItemsSource="{x:Bind Artikli}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock Text="{Binding Lookup}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                   Margin="24,0,0,24" />
+        <Grid x:Name="FieldsGrid"
+              RelativePanel.Below="TitleTextBlock"
+              RelativePanel.AlignLeftWithPanel="True"
+              RelativePanel.AlignRightWithPanel="True">
+            <Button x:Name="ArtikliButton"
+                    Content="Artikli"
+                    Margin="8,8,8,8"
+                    Click="ArtikliButton_Click"></Button>
+            <!--<Button x:Name="DokumentiButton"
+                    Content="Dokumenti"
+                    Margin="8,8,8,8"
+                    Click="DokumentiButton_Click"/>-->
         </Grid>
+        <!--<GridView x:Name="FieldsGridView"
+                  RelativePanel.Below="TitleTextBlock"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+            <GridView.Items>
+                <TextBlock x:Name="ArtiklLabel"
+                           Text="Artikli"
+                           />
+                <TextBlock x:Name="Dokument"
+                           Text="Dokument"/>
+            </GridView.Items>
+                          
+        </GridView>-->
     </RelativePanel>
 </Page>
