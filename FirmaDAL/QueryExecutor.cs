@@ -19,7 +19,7 @@ namespace FirmaDAL
             }
         }
 
-        public static DataTable ExecuteReaderQuery(string queryText)
+        public static DataTable ExecuteQuery(string queryText)
         {
             try
             {
@@ -51,6 +51,33 @@ namespace FirmaDAL
             {
                 Debug.WriteLine(exc.Message);
                 return null;
+            }
+        }
+
+        public static int ExecuteNonQuery(string command)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = command;
+                            return cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            } catch (Exception exc)
+            {
+                Debug.WriteLine(exc.Message);
+                return -1;
             }
         }
     }

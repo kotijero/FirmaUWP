@@ -9,6 +9,22 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <!--<Flyout x:Key="OrderByFlyout">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Button x:Name="AButton"
+                            Content="A pretty button"/>
+                    <TextBlock x:Name="OrderByTextBlock"
+                               Text="Order by:"/>
+                    --><!--<ComboBox x:Name="OrderByComboBox"
+                              Header="Order By"
+                              ItemsSource="{x:Bind orderByDictionary}"
+                              DisplayMemberPath="Value"
+                              SelectedValuePath="Key"
+                              SelectedValue="{x:Bind orderBy, Mode=TwoWay}"/>--><!--
+                </StackPanel.Resources>
+            </StackPanel>
+        </Flyout>-->
         <!--<DataTemplate x:Key="ArtiklListView_DefaultItemTemplate"
                       x:DataType="model:Artikl">
             
@@ -32,6 +48,42 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="24,0,0,24"
                        />
+        <CommandBar x:Name="MainCommandBar"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    OverflowButtonVisibility="Collapsed"
+                    DefaultLabelPosition="Right">
+            <AppBarButton x:Name="OrderByButton"
+                          Icon="Document"
+                          Label="Order by:">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <RelativePanel>
+                            <ComboBox x:Name="OrderByComboBox"
+                                      Header="Order By"
+                                      SelectionChanged="OrderByComboBox_SelectionChanged"
+                                      SelectedValue="Šifra artikla">
+                                <ComboBox.Items>
+                                    <x:String>Šifra artikla</x:String>
+                                    <x:String>Naziv artikla</x:String>
+                                </ComboBox.Items>
+                            </ComboBox>
+                            <TextBlock x:Name="OrderBySelectionTextBlock"
+                                       Text="None"/>
+                        </RelativePanel>
+                        
+                        
+                        <!--<StackPanel>
+                            <StackPanel.Resources>
+                                
+                                --><!----><!--
+                            </StackPanel.Resources>
+                        </StackPanel>-->
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
 
         <ProgressRing x:Name="LoadingIndicator"
                       Margin="24,0,0,24"

@@ -27,6 +27,9 @@ namespace Firma.Views.Artikl
     {
         FirmaDAL.Artikl persistedItem;
         ObservableCollection<FirmaDAL.Artikl> Artikli { get; } = new ObservableCollection<FirmaDAL.Artikl>();
+
+        List<string> OrderByList { get; set; }
+        string OrderByValue { get; set; }
         public ArtiklList()
         {
             this.InitializeComponent();
@@ -44,6 +47,14 @@ namespace Firma.Views.Artikl
                 Artikli.Add(item);
             }
 
+            OrderByList = new List<string>();
+            OrderByList.Add("Šifra artikla");
+            OrderByList.Add("Naziv artikla");
+            OrderByList.Add("Jedinica mjere");
+            OrderByList.Add("Cijena artikla");
+            //OrderByComboBox.ItemsSource = OrderByList;
+            OrderByValue = "Naziv artikla";
+
             Frame rootFrame = Window.Current.Content as Frame;
             if(rootFrame.CanGoBack)
             {
@@ -59,6 +70,13 @@ namespace Firma.Views.Artikl
         {
             persistedItem = e.ClickedItem as FirmaDAL.Artikl;
             this.Frame.Navigate(typeof(ArtiklDetails), e.ClickedItem);
+        }
+
+        private void OrderByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            var result = comboBox.SelectedItem.ToString();
+            //OrderBySelectionTextBlock.Text = result;
         }
     }
 }

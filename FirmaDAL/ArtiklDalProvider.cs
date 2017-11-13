@@ -12,7 +12,7 @@ namespace FirmaDAL
         public Artikl Fetch(int Id)
         {
             string query = "SELECT * FROM Artikl WHERE Id = " + Id;
-            DataTable result = QueryExecutor.ExecuteReaderQuery(query);
+            DataTable result = QueryExecutor.ExecuteQuery(query);
             if (result.Rows.Count < 1)
             {
                 return null;
@@ -28,7 +28,8 @@ namespace FirmaDAL
                     CijArtkila = (decimal)row["CijArtikla"],
                     ZastUsluga = (bool)row["ZastUsluga"],
                     SlikaArtikla = (byte[])row["SlikaArtikla"],
-                    TekstArtikla = (string)row["TekstArtikla"]
+                    TekstArtikla = (string)row["TekstArtikla"],
+                    DalProvider = this
                 };
                 return artikl;
             }
@@ -37,7 +38,7 @@ namespace FirmaDAL
         public List<Artikl> FetchAll()
         {
             string query = "SELECT * FROM Artikl";
-            DataTable result = QueryExecutor.ExecuteReaderQuery(query);
+            DataTable result = QueryExecutor.ExecuteQuery(query);
             if (result.Rows.Count < 1)
             {
                 return null;
@@ -56,19 +57,20 @@ namespace FirmaDAL
                         CijArtkila = row["CijArtikla"].GetType() == typeof(DBNull) ? (decimal)0.0 :(decimal)row["CijArtikla"],
                         ZastUsluga = row["ZastUsluga"].GetType() == typeof(DBNull) ? false : (bool)row["ZastUsluga"],
                         //SlikaArtikla = (byte[])row["SlikaArtikla"],
-                        TekstArtikla = row["TekstArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["TekstArtikla"]
+                        TekstArtikla = row["TekstArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["TekstArtikla"],
+                        DalProvider = this
                     };
                     artiklList.Add(artikl);
                 }
                 
-                return artiklList;
+                return artiklList.OrderBy(t => t.NazArtikla).ToList();
             }
         }
 
         public Artikl FetchAtPosition<TKey>(int position)
         {
             string query = "SELECT * FROM Artikl ORDER BY SifArtikla";
-            DataTable result = QueryExecutor.ExecuteReaderQuery(query);
+            DataTable result = QueryExecutor.ExecuteQuery(query);
             if (result.Rows.Count < position)
             {
                 return null;
@@ -84,7 +86,8 @@ namespace FirmaDAL
                     CijArtkila = (decimal)row["CijArtikla"],
                     ZastUsluga = (bool)row["ZastUsluga"],
                     SlikaArtikla = (byte[])row["SlikaArtikla"],
-                    TekstArtikla = (string)row["TekstArtikla"]
+                    TekstArtikla = (string)row["TekstArtikla"],
+                    DalProvider = this
                 };
                 return artikl;
             }
@@ -98,13 +101,74 @@ namespace FirmaDAL
         public int ItemsCount()
         {
             string query = @"SELECT COUNT(*) FROM Artikl";
-            DataTable result = QueryExecutor.ExecuteReaderQuery(query);
+            DataTable result = QueryExecutor.ExecuteQuery(query);
             return (int)result.Rows[0].ItemArray[0];
         }
 
         public void SaveChanges(IEnumerable<Artikl> changedItems, IEnumerable<Artikl> newItems, IEnumerable<Artikl> deletedItems)
         {
-            throw new NotImplementedException();
+            if (changedItems != null)
+            {
+                foreach (var item in changedItems)
+                {
+                    UpdateItem(item);
+                }
+            }
+            if (newItems != null)
+            {
+                foreach (var item in newItems)
+                {
+                    AddItem(item);
+                }
+            }
+            if (deletedItems != null)
+            {
+                foreach (var item in deletedItems)
+                {
+                    DeleteItem(item);
+                }
+            }
+        }
+        public void AddItem(Artikl item)
+        {
+            string query = String.Format(@"INSERT INTO Artikl (SifArtikla, NazArtikla, JedMjere, CijArtikla, ZastUsluga, SlikaArtikla)
+                                                VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6})",
+                                                     item.NazArtikla,
+                                                     item.JedMjere,
+                                                     item.CijArtkila,
+                                                     item.ZastUsluga,
+                                                     item.SlikaArtikla,
+                                                     item.TekstArtikla,
+                                                     item.SifArtikla);
+            QueryExecutor.ExecuteNonQuery(query);
+        }
+
+        public void UpdateItem(Artikl item)
+        {
+            string query = String.Format(@"UPDATE Artikl
+                                              SET NazArtikla = {0},
+                                                  JedMjere = {1},
+                                                  CijArtikla = {2},
+                                                  ZastUsluga = {3},
+                                                  SlikaArtikla = {4},
+                                                  TekstArtikla = {5}
+                                            WHERE SifArtikla = {6}",
+                                                     item.NazArtikla,
+                                                     item.JedMjere,
+                                                     item.CijArtkila,
+                                                     item.ZastUsluga,
+                                                     item.SlikaArtikla,
+                                                     item.TekstArtikla,
+                                                     item.SifArtikla);
+            QueryExecutor.ExecuteNonQuery(query);
+        }
+
+        
+
+        public void DeleteItem(Artikl item)
+        {
+            string query = String.Format(@"DELETE FROM Artikl WHERE SifArtikla = {0}", item.SifArtikla);
+            QueryExecutor.ExecuteNonQuery(query);
         }
     }
 }
