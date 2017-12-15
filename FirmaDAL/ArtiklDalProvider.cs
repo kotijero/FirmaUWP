@@ -146,18 +146,16 @@ namespace FirmaDAL
         public void UpdateItem(Artikl item)
         {
             string query = String.Format(@"UPDATE Artikl
-                                              SET NazArtikla = {0},
-                                                  JedMjere = {1},
+                                              SET NazArtikla = '{0}',
+                                                  JedMjere = '{1}',
                                                   CijArtikla = {2},
                                                   ZastUsluga = {3},
-                                                  SlikaArtikla = {4},
-                                                  TekstArtikla = {5}
-                                            WHERE SifArtikla = {6}",
+                                                  TekstArtikla = '{4}'
+                                            WHERE SifArtikla = {5}",
                                                      item.NazArtikla,
                                                      item.JedMjere,
                                                      item.CijArtkila,
-                                                     item.ZastUsluga,
-                                                     item.SlikaArtikla,
+                                                     item.ZastUsluga ? 1 : 0,
                                                      item.TekstArtikla,
                                                      item.SifArtikla);
             QueryExecutor.ExecuteNonQuery(query);

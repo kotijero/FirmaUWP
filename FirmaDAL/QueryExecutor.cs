@@ -29,17 +29,12 @@ namespace FirmaDAL
                     if (conn.State == System.Data.ConnectionState.Open)
                     {
                         using (SqlCommand cmd = conn.CreateCommand())
-                        {
+                        { 
                             cmd.CommandText = queryText;
                             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                             DataTable result = new DataTable();
                             adapter.Fill(result);
                             return result;
-                            
-                            //using (SqlDataReader reader = cmd.ExecuteReader())
-                            //{
-                            //    return reader.GetSchemaTable();
-                            //}
                         }
                     }
                     else

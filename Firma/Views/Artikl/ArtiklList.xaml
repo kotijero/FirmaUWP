@@ -36,8 +36,6 @@
         <DataTemplate x:Key="ArtiklListView_DefaultItemTemplate"
                       x:DataType="model:Artikl">
             <Grid>
-                <TextBlock Text="Naziv"
-                           FontStyle="Oblique"/>
                 <TextBlock Text="{Binding Lookup}"/>
             </Grid>
         </DataTemplate>
@@ -54,6 +52,9 @@
                     RelativePanel.AlignTopWithPanel="True"
                     OverflowButtonVisibility="Collapsed"
                     DefaultLabelPosition="Right">
+            <AppBarButton x:Name="NewArtiklButton"
+                          Icon="Add"
+                          Label="New"/>
             <AppBarButton x:Name="OrderByButton"
                           Icon="Document"
                           Label="Order by:">
@@ -62,24 +63,10 @@
                         <RelativePanel>
                             <ComboBox x:Name="OrderByComboBox"
                                       Header="Order By"
-                                      SelectionChanged="OrderByComboBox_SelectionChanged"
-                                      SelectedValue="Šifra artikla">
-                                <ComboBox.Items>
-                                    <x:String>Šifra artikla</x:String>
-                                    <x:String>Naziv artikla</x:String>
-                                </ComboBox.Items>
+                                      ItemsSource="{x:Bind OrderByList}"
+                                      SelectionChanged="OrderByComboBox_SelectionChanged">
                             </ComboBox>
-                            <TextBlock x:Name="OrderBySelectionTextBlock"
-                                       Text="None"/>
                         </RelativePanel>
-                        
-                        
-                        <!--<StackPanel>
-                            <StackPanel.Resources>
-                                
-                                --><!----><!--
-                            </StackPanel.Resources>
-                        </StackPanel>-->
                     </Flyout>
                 </AppBarButton.Flyout>
             </AppBarButton>

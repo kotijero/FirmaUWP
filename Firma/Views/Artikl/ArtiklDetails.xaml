@@ -6,6 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        
+    </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Horizontal">
@@ -24,8 +27,13 @@
                     RelativePanel.AlignTopWithPanel="True"
                     OverflowButtonVisibility="Collapsed"
                     DefaultLabelPosition="Right">
+            <AppBarButton x:Name="SaveChangesButton"
+                          Icon="Save"
+                          Label="Save changes"
+                          Visibility="Collapsed"
+                          Click="{x:Bind ToggleEditState}"/>
             <AppBarButton x:Name="NewButton"
-                          Icon="Document"
+                          Icon="Add"
                           Label="New"
                           />
             <AppBarButton x:Name="EditButton"
@@ -63,7 +71,7 @@
                            Grid.Row="0"
                            Grid.Column="0"/>
                 <TextBox x:Name="SifArtiklaTextBox"
-                           Text="{x:Bind artiklModel.SifArtikla}"
+                           Text="{x:Bind artiklModel.SifArtikla, Mode=TwoWay}"
                            Margin="10,2,3,10"
                            Width="200" Height="32" VerticalAlignment="Top"
                            IsEnabled="False"

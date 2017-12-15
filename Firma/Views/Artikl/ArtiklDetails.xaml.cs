@@ -27,6 +27,7 @@ namespace Firma.Views.Artikl
         private FirmaDAL.Artikl originalArtikl;
         private bool changed;
         public bool inEditMode = false;
+
         public ArtiklDetails()
         {
             this.InitializeComponent();
@@ -39,6 +40,7 @@ namespace Firma.Views.Artikl
             inEditMode = false;
             changed = false;
         }
+        
 
 
         private async void ToggleEditState()
@@ -48,11 +50,13 @@ namespace Firma.Views.Artikl
                 // Save changes?
                 if (changed)
                 {
-                    var dialog = new MessageDialog("Do you want to save changes?");
-                    dialog.Commands.Add(new UICommand("Yes", new UICommandInvokedHandler(AnswerSaveChanges)));
-                    dialog.Commands.Add(new UICommand("No", new UICommandInvokedHandler(AnswerSaveChanges)));
-                    dialog.Commands.Add(new UICommand("Cancel", new UICommandInvokedHandler(AnswerSaveChanges)));
-                    await dialog.ShowAsync();
+                    bool response = await ConfirmSaveChanges();
+
+                    if (response)
+                    {
+                        RemoveChangesNotifySettings();
+                        inEditMode = false;
+                    }
                 }
                 else
                 {
@@ -79,17 +83,31 @@ namespace Firma.Views.Artikl
             UpdateTextBoxStates();
         }
 
-        private void AnswerSaveChanges(IUICommand command)
+        private async System.Threading.Tasks.Task<bool> ConfirmSaveChanges()
         {
-            if (command.Label.Equals("Yes"))
+            ContentDialog saveChangesDialog = new ContentDialog
+            {
+                Title = "Changes detected",
+                Content = "Do you want to save changes?",
+                PrimaryButtonText = "Yes",
+                SecondaryButtonText = "No",
+                CloseButtonText = "Cancel"
+            };
+
+            ContentDialogResult result = await saveChangesDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
             {
                 RemoveChangesNotifySettings();
                 FirmaDAL.ArtiklDalProvider dalProvider = artiklModel.DalProvider;
+
                 dalProvider.UpdateItem(artiklModel);
                 inEditMode = false;
                 UpdateTextBoxStates();
+
+                return true;
             }
-            else if (command.Label.Equals("No"))
+            else if (result == ContentDialogResult.Secondary)
             {
                 RemoveChangesNotifySettings();
                 artiklModel.NazArtikla = originalArtikl.NazArtikla;
@@ -101,6 +119,12 @@ namespace Firma.Views.Artikl
 
                 inEditMode = false;
                 UpdateTextBoxStates();
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -111,6 +135,9 @@ namespace Firma.Views.Artikl
             JedMjereTextBox.IsEnabled = inEditMode;
             ZastUslugaCheckBox.IsEnabled = inEditMode;
             TekstArtiklaTextBox.IsEnabled = inEditMode;
+            SaveChangesButton.Visibility = inEditMode ? Visibility.Visible : Visibility.Collapsed;
+            NewButton.Visibility = inEditMode ? Visibility.Collapsed : Visibility.Visible;
+
         }
 
         private void NotifyChanged(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
@@ -138,14 +165,32 @@ namespace Firma.Views.Artikl
             TekstArtiklaTextBox.BeforeTextChanging -= NotifyChanged;
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ContentDialog deleteDialog = new ContentDialog
+            {
+                Title = "Delete artikl",
+                Content = "This function is not implemented yet",
+                PrimaryButtonText = "Oh, okay"
+            };
+            await deleteDialog.ShowAsync();
         }
 
         private void ZastUslugaCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             NotifyChanged(null, null);
+        }
+
+        private async void BackRequested(object sender, System.ComponentModel.HandledEventArgs e)
+        {
+            e.Handled = true;
+            bool response = await ConfirmSaveChanges();
+
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (response && rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+            }
         }
     }
 }

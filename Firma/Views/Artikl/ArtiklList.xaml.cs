@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,20 +24,44 @@ namespace Firma.Views.Artikl
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ArtiklList : Page
+    public sealed partial class ArtiklList : Page, INotifyPropertyChanged
     {
         FirmaDAL.Artikl persistedItem;
         ObservableCollection<FirmaDAL.Artikl> Artikli { get; } = new ObservableCollection<FirmaDAL.Artikl>();
 
-        List<string> OrderByList { get; set; }
-        string OrderByValue { get; set; }
+        List<Misc.OrderBy> OrderByList = new List<Misc.OrderBy>();
+        private Misc.OrderBy _currentOrderBy;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Misc.OrderBy CurrentOrderBy
+        {
+            get
+            {
+                return _currentOrderBy;
+            }
+            set
+            {
+                if (_currentOrderBy != value)
+                {
+                    _currentOrderBy = value;
+                    RaisePropertyChanged("OrderBy");
+                }
+            }
+        }
         public ArtiklList()
         {
             this.InitializeComponent();
+
+            OrderByList.Add(new Misc.OrderBy(1, "Šifra artikla"));
+            OrderByList.Add(new Misc.OrderBy(2, "Naziv artikla"));
+            OrderByList.Add(new Misc.OrderBy(3, "Jedinica mjere"));
+            OrderByList.Add(new Misc.OrderBy(4, "Cijena artikla"));
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Loading:
             Artikli.Clear();
             ArtiklDalProvider dalProvider = new ArtiklDalProvider();
             LoadingIndicator.IsActive = true;
@@ -47,14 +72,7 @@ namespace Firma.Views.Artikl
                 Artikli.Add(item);
             }
 
-            OrderByList = new List<string>();
-            OrderByList.Add("Šifra artikla");
-            OrderByList.Add("Naziv artikla");
-            OrderByList.Add("Jedinica mjere");
-            OrderByList.Add("Cijena artikla");
-            //OrderByComboBox.ItemsSource = OrderByList;
-            OrderByValue = "Naziv artikla";
-
+            // Navigation logic
             Frame rootFrame = Window.Current.Content as Frame;
             if(rootFrame.CanGoBack)
             {
@@ -75,8 +93,14 @@ namespace Firma.Views.Artikl
         private void OrderByComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
+            
             var result = comboBox.SelectedItem.ToString();
             //OrderBySelectionTextBlock.Text = result;
+        }
+
+        void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
