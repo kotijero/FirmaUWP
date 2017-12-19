@@ -13,7 +13,8 @@
                    Text="FirmaUWP"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="24,0,0,24" />
-        <Grid x:Name="FieldsGrid"
+        <StackPanel x:Name="FieldsGrid"
+                    Orientation="Horizontal"
               RelativePanel.Below="TitleTextBlock"
               RelativePanel.AlignLeftWithPanel="True"
               RelativePanel.AlignRightWithPanel="True">
@@ -21,11 +22,15 @@
                     Content="Artikli"
                     Margin="8,8,8,8"
                     Click="ArtikliButton_Click"></Button>
+            <Button x:Name="PartneriButton"
+                    Content="Partneri"
+                    Margin="8,8,8,8"
+                    Click="PartneriButton_Click"/>
             <!--<Button x:Name="DokumentiButton"
                     Content="Dokumenti"
                     Margin="8,8,8,8"
                     Click="DokumentiButton_Click"/>-->
-        </Grid>
+        </StackPanel>
         <!--<GridView x:Name="FieldsGridView"
                   RelativePanel.Below="TitleTextBlock"
                   RelativePanel.AlignLeftWithPanel="True"

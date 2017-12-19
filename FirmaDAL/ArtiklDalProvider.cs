@@ -131,15 +131,13 @@ namespace FirmaDAL
         }
         public void AddItem(Artikl item)
         {
-            string query = String.Format(@"INSERT INTO Artikl (SifArtikla, NazArtikla, JedMjere, CijArtikla, ZastUsluga, SlikaArtikla)
-                                                VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6})",
+            string query = String.Format(@"INSERT INTO Artikl (NazArtikla, JedMjere, CijArtikla, ZastUsluga, TekstArtikla)
+                                                VALUES ({0}, {1}, {2}, {3}, {4})",
                                                      item.NazArtikla,
                                                      item.JedMjere,
                                                      item.CijArtkila,
-                                                     item.ZastUsluga,
-                                                     item.SlikaArtikla,
-                                                     item.TekstArtikla,
-                                                     item.SifArtikla);
+                                                     item.ZastUsluga ? 1 : 0,
+                                                     item.TekstArtikla);
             QueryExecutor.ExecuteNonQuery(query);
         }
 

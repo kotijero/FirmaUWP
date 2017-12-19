@@ -192,5 +192,10 @@ namespace Firma.Views.Artikl
                 rootFrame.GoBack();
             }
         }
+
+        private void NewButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ArtiklNew));
+        }
     }
 }

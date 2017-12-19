@@ -98,6 +98,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Misc\ChangeTypeConverter.cs" />
     <Compile Include="Misc\OrderBy.cs" />
     <Compile Include="Misc\OrderByItemConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="Views\Artikl\ArtiklNew.xaml.cs">
       <DependentUpon>ArtiklNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Partner\PartnerList.xaml.cs">
+      <DependentUpon>PartnerList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Artikl\ArtiklNew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Partner\PartnerList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,10 +7,119 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="TitleTextBlock"
                    Text="New Artikl"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="24,0,0,24"/>
-    </Grid>
+        <CommandBar x:Name="MainCommandBar"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    OverflowButtonVisibility="Collapsed"
+                    DefaultLabelPosition="Right">
+            <AppBarButton x:Name="SaveChangesButton"
+                          Icon="Save"
+                          Label="Save changes"
+                          Visibility="Collapsed"
+                          Click="SaveChangesButton_Click"/>
+        </CommandBar>
+        <RelativePanel RelativePanel.Below="TitleTextBlock"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True"
+                       RelativePanel.AlignBottomWithPanel="True"
+                       >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="NazivArtiklaTextBlock"
+                           Text="Naziv artikla: "
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="1"
+                           Grid.Column="0"/>
+                <TextBox x:Name="NazivArtiklaTextBox"
+                         Text="{x:Bind artiklModel.NazArtikla, Mode=TwoWay}"
+                         Margin="10,2,3,10"
+                         Width="200" Height="32" VerticalAlignment="Top"
+                         Grid.Row="1"
+                         Grid.Column="1"/>
+                <TextBlock x:Name="JedMjereTextBlock"
+                           Text="Jedinica mjere: "
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="2"
+                           Grid.Column="0"/>
+                <TextBox x:Name="JedMjereTextBox"
+                         Text="{x:Bind artiklModel.JedMjere, Mode=TwoWay}"
+                         Margin="10,2,3,10"
+                         Width="200" Height="32" VerticalAlignment="Top"
+                         Grid.Row="2"
+                         Grid.Column="1"/>
+                <TextBlock x:Name="CijenaArtiklaTextBlock"
+                           Text="Cijena artikla:"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="3"
+                           Grid.Column="0"/>
+                <TextBox x:Name="CijenaArtiklaTextBox"
+                         Text="{x:Bind artiklModel.CijArtkila, Mode=TwoWay}"
+                         Margin="10,2,3,10"
+                         Width="200" Height="32" VerticalAlignment="Top"
+                         Grid.Row="3"
+                         Grid.Column="1"/>
+                <TextBlock x:Name="ZastUslugaTextBlock"
+                           Text="Zaštićena usluga (?):"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="4"
+                           Grid.Column="0"/>
+                <CheckBox x:Name="ZastUslugaCheckBox"
+                          IsChecked="{x:Bind artiklModel.ZastUsluga, Mode=TwoWay}"
+                          Grid.Row="4"
+                          Margin="10,2,3,10"
+                          Grid.Column="1"/>
+                <TextBlock x:Name="SlikaArtiklaTextBlock"
+                           Text="Slika artikla:"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="5"
+                           Grid.Column="0"/>
+                <Image x:Name="SlikaArtiklaImage"
+                       Source="{x:Bind artiklModel.SlikaArtiklaImage}"
+                       Grid.Row="5"
+                       Grid.Column="1"
+                       MinHeight="30"
+                       MinWidth="30"/>
+                <TextBlock x:Name="TekstCijenaArtiklaTextBlock"
+                           Text="Tekst artikla:"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Margin="10,2,3,10"
+                           Grid.Row="6"
+                           Grid.Column="0"/>
+                <TextBox x:Name="TekstArtiklaTextBox"
+                         Text="{x:Bind artiklModel.TekstArtikla, Mode=TwoWay}"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Margin="10,2,3,10"
+                         Width="200" Height="90" VerticalAlignment="Top"
+                         Grid.Row="6"
+                         Grid.Column="1"/>
+            </Grid>
+
+
+
+        </RelativePanel>
+    </RelativePanel>
 </Page>

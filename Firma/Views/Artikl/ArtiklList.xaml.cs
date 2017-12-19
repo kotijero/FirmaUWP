@@ -102,5 +102,10 @@ namespace Firma.Views.Artikl
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+
+        private void NewArtiklButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ArtiklNew));
+        }
     }
 }

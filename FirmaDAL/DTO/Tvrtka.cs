@@ -10,5 +10,12 @@ namespace FirmaDAL
     {
         public string MatBrTvrtke { get; set; }
         public string NazivTvrtke { get; set; }
+        public override string Naziv
+        {
+            get
+            {
+                return NazivTvrtke + " (" + MatBrTvrtke + ")";
+            }
+        }
     }
 }

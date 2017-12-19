@@ -1,5 +1,4 @@
-﻿using FirmaDAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -16,29 +15,34 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Firma
+namespace Firma.Views.Partner
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class PartnerList : Page
     {
-        ObservableCollection<Artikl> Artikli { get; } = new ObservableCollection<Artikl>();
-        public MainPage()
+        ObservableCollection<FirmaDAL.Partner> Partneri { get; } = new ObservableCollection<FirmaDAL.Partner>();
+        public PartnerList()
         {
             this.InitializeComponent();
-            //Artikli.Clear();
-            //ArtiklDalProvider dalProvider = new ArtiklDalProvider();
-            //List<Artikl> result = dalProvider.FetchAll();
-            //foreach (var item in result)
-            //{
-            //    Artikli.Add(item);
-            //}
+            PartnerListView.ItemsSource = Partneri;
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Partneri.Clear();
+            FirmaDAL.PartnerDalProvider dalProvider = new FirmaDAL.PartnerDalProvider();
+            LoadingIndicator.IsActive = true;
+            List<FirmaDAL.Partner> result = await Task.Run(() => dalProvider.FetchAll());
+            LoadingIndicator.IsActive = false;
+            foreach (var item in result)
+            {
+                Partneri.Add(item);
+            }
+
             // Navigation logic
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
@@ -49,21 +53,6 @@ namespace Firma
             {
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
             }
-        }
-
-        private void ArtikliButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Views.Artikl.ArtiklList));
-        }
-
-        private void DokumentiButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void PartneriButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Views.Partner.PartnerList));
         }
     }
 }

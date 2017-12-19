@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FirmaDAL
 {
-    public class Partner
+    public abstract class Partner
     {
         public int IdPartnera { get; set; }
         public string TipPartnera { get; set; }
@@ -19,5 +19,6 @@ namespace FirmaDAL
         public virtual ICollection<Dokument> Dokument { get; set; }
         public virtual Mjesto MjestoIsporuke { get; set; }
         public virtual Mjesto MjestoSjedista { get; set; }
+        public abstract string Naziv { get; }
     }
 }

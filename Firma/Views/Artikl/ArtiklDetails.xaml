@@ -35,7 +35,7 @@
             <AppBarButton x:Name="NewButton"
                           Icon="Add"
                           Label="New"
-                          />
+                          Click="NewButton_Click"/>
             <AppBarButton x:Name="EditButton"
                           Icon="Edit"
                           Label="Edit"
@@ -117,7 +117,7 @@
                          Grid.Row="3"
                          Grid.Column="1"/>
                 <TextBlock x:Name="ZastUslugaTextBlock"
-                           Text="Zaštićena usluuga (?):"
+                           Text="Zaštićena usluga (?):"
                            Style="{StaticResource BaseTextBlockStyle}"
                            Margin="10,2,3,10"
                            Grid.Row="4"
@@ -129,7 +129,7 @@
                           Grid.Column="1"
                           IsEnabled="{x:Bind inEditMode}"/>
                 <TextBlock x:Name="SlikaArtiklaTextBlock"
-                           Text="Slika artikla"
+                           Text="Slika artikla:"
                            Style="{StaticResource BaseTextBlockStyle}"
                            Margin="10,2,3,10"
                            Grid.Row="5"

@@ -54,7 +54,8 @@
                     DefaultLabelPosition="Right">
             <AppBarButton x:Name="NewArtiklButton"
                           Icon="Add"
-                          Label="New"/>
+                          Label="New"
+                          Click="NewArtiklButton_Click"/>
             <AppBarButton x:Name="OrderByButton"
                           Icon="Document"
                           Label="Order by:">

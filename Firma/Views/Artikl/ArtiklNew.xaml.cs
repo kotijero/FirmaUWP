@@ -22,9 +22,49 @@ namespace Firma.Views.Artikl
     /// </summary>
     public sealed partial class ArtiklNew : Page
     {
+        FirmaDAL.Artikl artiklModel;
         public ArtiklNew()
         {
+            artiklModel = new FirmaDAL.Artikl();
             this.InitializeComponent();
+        }
+
+        private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void BackRequested(object sender, System.ComponentModel.HandledEventArgs e)
+        {
+            ContentDialog saveChangesDialog = new ContentDialog
+            {
+                Title = "Save artikl",
+                Content = "Do you want to save this item?",
+                PrimaryButtonText = "Save",
+                SecondaryButtonText = "Don't save",
+                CloseButtonText = "Cancel"
+            };
+
+            ContentDialogResult result = await saveChangesDialog.ShowAsync();
+
+            bool backConfirmed = false;
+
+            if (result == ContentDialogResult.Primary)
+            {
+                FirmaDAL.ArtiklDalProvider dalProvider = artiklModel.DalProvider;
+                dalProvider.AddItem(artiklModel);
+
+                backConfirmed = true;
+            } else if (result == ContentDialogResult.Primary)
+            {
+                backConfirmed = true;
+            }
+
+            if (backConfirmed)
+            {
+                Frame rootFrame = Window.Current.Content as Frame;
+                if (rootFrame.CanGoBack) rootFrame.GoBack();
+            }
         }
     }
 }

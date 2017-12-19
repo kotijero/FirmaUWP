@@ -10,5 +10,14 @@ namespace FirmaDAL
     {
         public string PrezimeOsobe { get; set; }
         public string ImeOsobe { get; set; }
+        
+
+        public override string Naziv
+        {
+            get
+            {
+                return ImeOsobe + " " + PrezimeOsobe;
+            }
+        }
     }
 }
