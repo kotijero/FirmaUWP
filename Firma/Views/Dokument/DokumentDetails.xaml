@@ -1,0 +1,331 @@
+﻿<Page
+    x:Class="Firma.Views.Dokument.DokumentDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Firma.Views.Dokument"
+    xmlns:model="using:FirmaDAL"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Converters="using:Firma"
+    xmlns:MyModel="using:Firma.Models"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Converters:DateTimeToDateTimeOffsetConverter
+            x:Key="DateTimeToDateTimeOffsetConverter"/>
+        
+    </Page.Resources>
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="NaslovTextBlock"
+                       Text="Pregled dokumenata"
+                       Style="{StaticResource TitleTextBlockStyle}"
+                       Margin="24,5,0,24"
+                       />
+        <StackPanel Name="NavigationStackPanel"
+                    Orientation="Horizontal"
+                    RelativePanel.RightOf="NaslovTextBlock"
+                    Margin="15,8">
+            <Button Name="PreviousButton"
+                    Content="Previous" 
+                    Click="PreviousButton_Click"/>
+            <TextBox Name="PositionTextBox"
+                     Width="10"
+                     Text="{x:Bind CurrentId, Mode=TwoWay}" FocusDisengaged="UpdateNavigation" TextChanged="PositionTextBox_TextChanged"
+                     InputScope="Number"/>
+            <TextBlock Text="/"
+                       Margin="3,5"/>
+            <TextBlock Name="TotalCountTextBlock"
+                       Text="0"
+                       Margin="0,5,4,0"/>
+            <Button Name="NextButton"
+                    Content="Next" Click="NextButton_Click"/>
+        </StackPanel>
+        <CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    OverflowButtonVisibility="Collapsed"
+                    DefaultLabelPosition="Right">
+            <AppBarButton Name="EditDokumentButton"
+                          Label="Izmijeni"
+                          Icon="Document"
+                          Click="EditDokumentButton_Click"/>
+            <AppBarButton Name="DeleteDokumentButton"
+                          Label="Izbriši"
+                          Icon="Delete"
+                          Click="DeleteDokumentButton_Click"/>
+            <AppBarSeparator/>
+            <AppBarButton Name="SaveDokumentButton"
+                          Label="Spremi"
+                          Icon="Save"/>
+            <AppBarButton Name="CancelDokumentButton"
+                          Label="Odustani"
+                          Icon="Cancel"/>
+            <AppBarButton Name="NewDokumentButton"
+                          Label="New"
+                          Icon="Add"
+                          Click="NewDokumentButton_Click"/>
+        </CommandBar>
+        <ProgressRing x:Name="LoadingIndicator"
+                      Margin="24,0,0,24"
+                      RelativePanel.Below="NaslovTextBlock"/>
+        <Grid Name="DetailsGrid" 
+              RelativePanel.Below="NaslovTextBlock"
+              Margin="24,8,8,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="IdDokumentaTextBlock"
+                       Text="Id dokumenta"
+                       Grid.Row="0"
+                       Grid.Column="0"/>
+            <Grid Grid.Column="1"
+                  Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="IdDokumentaTextBox"
+                         Text="{x:Bind currentDokument.IdDokumenta, Mode=TwoWay}"
+                         Grid.Row="0"
+                         Grid.Column="0"
+                         HorizontalAlignment="Left"
+                         Width="100"
+                         IsEnabled="False"/>
+                <TextBlock Name="VrstaTextBlock"
+                           Text="Vrsta"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,8,0"/>
+                <TextBox Name="VrstaTextBox"
+                         Text="{x:Bind currentDokument.IdDokumenta, Mode=TwoWay}"
+                         Grid.Row="0"
+                         Grid.Column="2"
+                         HorizontalAlignment="Left"
+                         IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+                <TextBlock Name="BrojDokumentaTextBlock"
+                           Text="Broj"
+                           Grid.Row="0"
+                           Grid.Column="3"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,8,0"/>
+                <TextBox Name="BrojDokumentaTextBox"
+                         Text="{x:Bind currentDokument.BrDokumenta, Mode=TwoWay}"
+                         Grid.Row="0"
+                         Grid.Column="4"
+                         IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+            </Grid>
+            <TextBlock Name="DatumTextBlock"
+                       Text="Datum"
+                       Grid.Column="2"
+                       Grid.Row="0"
+                       Margin="10,0"/>
+            <DatePicker Name="DatumDatePicker"
+                        Date="{x:Bind currentDokument.DatDokumenta, Converter={StaticResource DateTimeToDateTimeOffsetConverter}, Mode=TwoWay}"
+                        Grid.Column="3"
+                        Grid.Row="0"
+                        IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+
+            <TextBlock Name="PartnerTextBlock"
+                       Text="Partner"
+                       Grid.Row="1"
+                       Grid.Column="0"/>
+            <ComboBox Name="PartnerCombobox"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      Width="400"
+                      ItemsSource="{x:Bind partnerLookupList}"
+                      DisplayMemberPath="Value"
+                      SelectedItem="{x:Bind currentDokument.PartnerLookup, Mode=TwoWay}"
+                      IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+            <TextBlock Name="PorezTextBlock"
+                       Text="Porez"
+                       Grid.Row="1"
+                       Grid.Column="2"
+                       Margin="10,0"/>
+            <TextBox Name="PorezTextBox"
+                     Text="{x:Bind currentDokument.PostoPorez, Mode=TwoWay}"
+                     Grid.Row="1"
+                     Grid.Column="3"
+                     IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+
+            <TextBlock Name="PrethodniTextBlock"
+                       Text="Prethodni dok."
+                       Grid.Row="2"
+                       Grid.Column="0"/>
+            <ComboBox Name="PrethodniComboBox"
+                      Grid.Row="2"
+                      Grid.Column="1"
+                      Width="400"
+                      ItemsSource="{x:Bind dokumentLookupList}"
+                      DisplayMemberPath="Value"
+                      SelectedItem="{x:Bind currentDokument.DokumentLookup, Mode=TwoWay}"
+                      IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+            <TextBlock Name="IznosTextBlock"
+                       Text="Iznos"
+                       Grid.Row="2"
+                       Grid.Column="2"
+                       Margin="10,0"/>
+            <TextBox Name="IznosTextBox"
+                     Text="{x:Bind currentDokument.IznosDokumenta, Mode=TwoWay}"
+                     Grid.Row="2"
+                     Grid.Column="3"
+                     IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+        </Grid>
+        <ListView Name="StavkeListView"
+                  RelativePanel.Below="DetailsGrid"
+                  SelectionMode="None"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.IsVerticalRailEnabled="True"
+                  ScrollViewer.VerticalScrollMode="Enabled"
+                  ScrollViewer.HorizontalScrollMode="Enabled"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.IsHorizontalRailEnabled="True"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  BorderBrush="Gray"
+                  ItemsSource="{x:Bind currentDokument.Stavke}"
+                  Margin="0,30,0,0">
+            <!--IsEnabled="{x:Bind InEditMode, Mode=OneWay}"-->
+            <!--Tu ti fali definicija tablice-->
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="10,0">
+                        <TextBlock Text="Naziv artikla" Margin="8,0" Width="300" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Mjera" Width="70" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Količina" Width="100" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Jedinična cijena" Width="150" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Rabat" Width="130" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Ukupno" Width="150" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="MyModel:StavkaLookupModel">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Name="NazivArtiklaComboBox"
+                                  Width="300"
+                                  Margin="8,0"
+                                  ItemsSource="{x:Bind ArtiklLookupList}"
+                                  SelectedItem="{x:Bind CurrentArtiklLookup, Mode=TwoWay}"
+                                  IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind JedMjere, Mode=OneWay}"
+                                 Width="70"
+                                  />
+                        <TextBox Text="{x:Bind KolArtikla, Mode=TwoWay}"
+                                 Width="100"
+                                 IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+                        <TextBox Text="{x:Bind JedCijArtikla, Mode=OneWay}"
+                                 Width="150"
+                                 IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
+                        <TextBox Text="{x:Bind PostoRabat}"
+                                 Width="130"/>
+                        <TextBlock Text="{x:Bind Ukupno, Mode=OneWay}"
+                                   Width="150"/>
+                        <Button Content="X"
+                                ToolTipService.ToolTip="Izbriši stavku"
+                                IsEnabled="{x:Bind InEditMode, Mode=OneWay}"
+                                Foreground="Red"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Style>
+                <Style TargetType="ListView" >
+                    <Setter Property="IsTabStop" Value="False" />
+                    <Setter Property="TabNavigation" Value="Once" />
+                    <Setter Property="IsSwipeEnabled" Value="True" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                    <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                    <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
+                    <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
+                    <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True" />
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+                    <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
+                    <Setter Property="UseSystemFocusVisuals" Value="True" />
+                    <Setter Property="ItemContainerTransitions">
+                        <Setter.Value>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                                <ContentThemeTransition />
+                                <ReorderThemeTransition />
+                                <EntranceThemeTransition IsStaggeringEnabled="False" />
+                            </TransitionCollection>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ItemsPanel">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListView">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <ContentControl Content="{TemplateBinding Header}"
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                ContentTransitions="{TemplateBinding HeaderTransitions}"/>
+
+                                        <ScrollViewer x:Name="ScrollViewer"
+                                          Grid.Row="1"
+                                        TabNavigation="{TemplateBinding TabNavigation}"
+                                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                        IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                        IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                        IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                        BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                            <ItemsPresenter 
+                                                Footer="{TemplateBinding Footer}"
+                                                FooterTemplate="{TemplateBinding FooterTemplate}"
+                                                FooterTransitions="{TemplateBinding FooterTransitions}"
+                                                Padding="{TemplateBinding Padding}" />
+                                        </ScrollViewer>
+
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Style>
+        </ListView>
+        <Button Name="NewStavkaButton"
+                RelativePanel.Below="StavkeListView"
+                Content="+"
+                Margin="18,0,0,0"
+                Width="100"
+                Click="NewStavkaButton_Click"/>
+    </RelativePanel>
+</Page>

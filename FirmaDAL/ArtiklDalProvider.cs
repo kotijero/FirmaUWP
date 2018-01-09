@@ -47,14 +47,14 @@ namespace FirmaDAL
             {
                 List<Artikl> artiklList = new List<Artikl>();
 
-                foreach(DataRow row in result.Rows)
+                foreach (DataRow row in result.Rows)
                 {
                     Artikl artikl = new Artikl
                     {
                         SifArtikla = row["SifArtikla"].GetType() == typeof(DBNull) ? 0 : (int)row["SifArtikla"],
                         NazArtikla = row["NazArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["NazArtikla"],
                         JedMjere = row["JedMjere"].GetType() == typeof(DBNull) ? string.Empty : (string)row["JedMjere"],
-                        CijArtkila = row["CijArtikla"].GetType() == typeof(DBNull) ? (decimal)0.0 :(decimal)row["CijArtikla"],
+                        CijArtkila = row["CijArtikla"].GetType() == typeof(DBNull) ? (decimal)0.0 : (decimal)row["CijArtikla"],
                         ZastUsluga = row["ZastUsluga"].GetType() == typeof(DBNull) ? false : (bool)row["ZastUsluga"],
                         //SlikaArtikla = (byte[])row["SlikaArtikla"],
                         TekstArtikla = row["TekstArtikla"].GetType() == typeof(DBNull) ? string.Empty : (string)row["TekstArtikla"],
@@ -62,7 +62,7 @@ namespace FirmaDAL
                     };
                     artiklList.Add(artikl);
                 }
-                
+
                 return artiklList.OrderBy(t => t.NazArtikla).ToList();
             }
         }
@@ -159,12 +159,24 @@ namespace FirmaDAL
             QueryExecutor.ExecuteNonQuery(query);
         }
 
-        
+
 
         public void DeleteItem(Artikl item)
         {
             string query = String.Format(@"DELETE FROM Artikl WHERE SifArtikla = {0}", item.SifArtikla);
             QueryExecutor.ExecuteNonQuery(query);
+        }
+
+        public Dictionary<int, string> FetchLookup()
+        {
+            string query = @"SELECT SifArtikla, NazArtikla FROM Artikl";
+            var result = QueryExecutor.ExecuteQuery(query);
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+            foreach (DataRow row in result.Rows)
+            {
+                dict.Add((int)row["SifArtikla"], (string)row["NazArtikla"]);
+            }
+            return dict;
         }
     }
 }

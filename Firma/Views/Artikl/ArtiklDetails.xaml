@@ -117,7 +117,7 @@
                          Grid.Row="3"
                          Grid.Column="1"/>
                 <TextBlock x:Name="ZastUslugaTextBlock"
-                           Text="Zaštićena usluga (?):"
+                           Text="Usluga:"
                            Style="{StaticResource BaseTextBlockStyle}"
                            Margin="10,2,3,10"
                            Grid.Row="4"
@@ -138,8 +138,8 @@
                        Source="{x:Bind artiklModel.SlikaArtiklaImage}"
                        Grid.Row="5"
                        Grid.Column="1"
-                       MinHeight="30"
-                       MinWidth="30"/>
+                       Height="300"
+                       Width="300"/>
                 <TextBlock x:Name="TekstCijenaArtiklaTextBlock"
                            Text="Tekst artikla:"
                            Style="{StaticResource BaseTextBlockStyle}"

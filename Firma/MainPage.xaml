@@ -26,6 +26,10 @@
                     Content="Partneri"
                     Margin="8,8,8,8"
                     Click="PartneriButton_Click"/>
+            <Button x:Name="DokumentButton"
+                    Content="Dokument"
+                    Margin="8,8,8,8"
+                    Click="DokumentButton_Click"/>
             <!--<Button x:Name="DokumentiButton"
                     Content="Dokumenti"
                     Margin="8,8,8,8"

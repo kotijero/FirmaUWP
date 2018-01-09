@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ArtiklDalProvider.cs" />
+    <Compile Include="DokumentDalProvider.cs" />
     <Compile Include="DTO\Artikl.cs" />
     <Compile Include="DTO\Dokument.cs" />
     <Compile Include="DTO\Drzava.cs" />

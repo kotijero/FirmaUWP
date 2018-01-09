@@ -43,7 +43,7 @@ namespace Firma.Views.Partner
                 Partneri.Add(item);
             }
 
-            // Navigation logic
+            // Navigation logic (back button)
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
             {
@@ -53,6 +53,16 @@ namespace Firma.Views.Partner
             {
                 Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
             }
+        }
+
+        private void NewPartnerButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PartnerListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(PartnerDetails), e.ClickedItem);
         }
     }
 }

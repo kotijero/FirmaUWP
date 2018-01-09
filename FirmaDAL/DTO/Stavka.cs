@@ -33,5 +33,13 @@ namespace FirmaDAL
                 return this.Artikl.JedMjere;
             }
         }
+
+        public decimal Ukupno
+        {
+            get
+            {
+                return KolArtikla * JedCijArtikla;
+            }
+        }
     }
 }

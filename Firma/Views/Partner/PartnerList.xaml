@@ -9,17 +9,40 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        
+        <Style x:Key="BorderedItem" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border Name="Border" BorderBrush="Transparent" BorderThickness="2">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="TitleTextBlock"
                    Text="Partneri"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="24,0,0,24"/>
+        <CommandBar x:Name="MainCommandBar"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    OverflowButtonVisibility="Collapsed"
+                    DefaultLabelPosition="Right">
+            <AppBarButton x:Name="NewPartnerButton"
+                          Icon="Add"
+                          Label="New"
+                          Click="NewPartnerButton_Click"/>
+        </CommandBar>
         <ProgressRing x:Name="LoadingIndicator"
                       Margin="24,0,0,24"
                       RelativePanel.Below="TitleTextBlock"/>
-        <RelativePanel RelativePanel.Below="TitleTextBlock">
+        <RelativePanel RelativePanel.Below="TitleTextBlock"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True">
             <ListView Name="PartnerListView"
                       SelectionMode="Single"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -28,13 +51,15 @@
                       ScrollViewer.HorizontalScrollMode="Enabled"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.IsHorizontalRailEnabled="True"
-                      Margin="20">
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True"
+                      ItemClick="PartnerListView_ItemClick">
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Id Partnera" Margin="8,0" Width="100" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <TextBlock Text="Naziv" Width="150" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <TextBlock Text="Tip Partnera" Width="110" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="10,0">
+                            <TextBlock Text="ID:" Margin="8,0" Width="100" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="Naziv:" Width="400" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="Tip Partnera:" Width="120" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <TextBlock Text="OIB" Width="120" Margin="20,0,0,0" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <TextBlock Text="Mjesto Partnera" Width="160" Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <TextBlock Text="Adresa Partnera" Width="160" Style="{StaticResource SubtitleTextBlockStyle}"/>
@@ -52,10 +77,10 @@
                                        Margin="8,0"/>
                             <TextBlock Name="NazivTextBlock"
                                        Text="{x:Bind Naziv}"
-                                       Width="150"/>
+                                       Width="400"/>
                             <TextBlock Name="TipPartneraTextBlock"
                                        Text="{x:Bind TipPartnera}"
-                                       Width="110"/>
+                                       Width="120"/>
                             <TextBlock Name="OIBTextBlock"
                                        Text="{x:Bind OIB}"
                                        Width="120"
