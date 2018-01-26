@@ -70,5 +70,15 @@ namespace Firma
         {
             this.Frame.Navigate(typeof(Views.Dokument.DokumentDetails));
         }
+
+        private void PartnerDetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Views.Partner.PartnerDetails));
+        }
+
+        private void PartnerDetails2Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Views.Partner.PartnerDetails2));
+        }
     }
 }

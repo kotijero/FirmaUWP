@@ -49,7 +49,7 @@ namespace Firma.Views.Dokument
         #region Private Members
 
         private ObservableCollection<FirmaDAL.Dokument> dokumentList;
-        private ObservableCollection<Models.StavkaLookupModel> currentStavkeList;
+        //private ObservableCollection<Models.StavkaLookupModel> currentStavkeList;
         private Models.DokumentLookupModel currentDokument;
         private int currentId;
         private int displayedId;
@@ -57,9 +57,9 @@ namespace Firma.Views.Dokument
         private bool inEditMode;
         private bool inSaveMode;
 
-        private List<Models.LookupModel> partnerLookupList;
-        private List<Models.LookupModel> dokumentLookupList;
-        private List<Models.LookupModel> artiklLookupList;
+        private List<FirmaBLL.Models.LookupModel> partnerLookupList;
+        private List<FirmaBLL.Models.LookupModel> dokumentLookupList;
+        private List<FirmaBLL.Models.LookupModel> artiklLookupList;
 
         #endregion
 
@@ -94,25 +94,21 @@ namespace Firma.Views.Dokument
             }
         }
 
-        public ObservableCollection<Models.StavkaLookupModel> CurrentStavkeList
-        {
-            get { return currentStavkeList; }
-            set
-            {
-                currentStavkeList.Clear();
-                foreach(var stavka in value)
-                {
-                    currentStavkeList.Add(stavka);
-                }
-                OnPropertyChanged();
-            }
-        }
+        //public ObservableCollection<Models.StavkaLookupModel> CurrentStavkeList
+        //{
+        //    get { return currentStavkeList; }
+        //    set
+        //    {
+        //        currentStavkeList.Clear();
+        //        foreach(var stavka in value)
+        //        {
+        //            currentStavkeList.Add(stavka);
+        //        }
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         #endregion
-
-
-
-        
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -142,34 +138,34 @@ namespace Firma.Views.Dokument
             FirmaDAL.DokumentDalProvider dokumentDalProvider = new FirmaDAL.DokumentDalProvider();
             List<FirmaDAL.Dokument> fetchedDokumentList = dokumentDalProvider.FetchAll();
 
-            dokumentLookupList = new List<Models.LookupModel>();
-            currentStavkeList = new ObservableCollection<Models.StavkaLookupModel>();
+            dokumentLookupList = new List<FirmaBLL.Models.LookupModel>();
+            //currentStavkeList = new ObservableCollection<Models.StavkaLookupModel>();
 
             // dokuments & lookup
             foreach (FirmaDAL.Dokument dokument in fetchedDokumentList)
             {
                 dokumentList.Add(dokument);
-                dokumentLookupList.Add(new Models.LookupModel { ID = dokument.IdDokumenta, Value = dokument.LookupData });
+                dokumentLookupList.Add(new FirmaBLL.Models.LookupModel { ID = dokument.IdDokumenta, Value = dokument.LookupData });
             }
-            dokumentLookupList.Add(new Models.LookupModel { ID = -1, Value = "- Nije odabrano -" });
+            dokumentLookupList.Add(new FirmaBLL.Models.LookupModel { ID = -1, Value = "- Nije odabrano -" });
 
             // partner lookup:
             FirmaDAL.PartnerDalProvider partnerDalProvider = new FirmaDAL.PartnerDalProvider();
-            partnerLookupList = new List<Models.LookupModel>();
+            partnerLookupList = new List<FirmaBLL.Models.LookupModel>();
             foreach (KeyValuePair<int, string> kv in partnerDalProvider.FetchLookup())
             {
-                partnerLookupList.Add(new Models.LookupModel { ID = kv.Key, Value = kv.Value });
+                partnerLookupList.Add(new FirmaBLL.Models.LookupModel { ID = kv.Key, Value = kv.Value });
             }
-            partnerLookupList.Add(new Models.LookupModel { ID = -1, Value = "-Odaberi partnera-" });
+            partnerLookupList.Add(new FirmaBLL.Models.LookupModel { ID = -1, Value = "-Odaberi partnera-" });
 
             // artikl lookup:
             FirmaDAL.ArtiklDalProvider artiklDalProvider = new FirmaDAL.ArtiklDalProvider();
             //var artiklDict = artiklDalProvider.FetchLookup();
             var artiklList = artiklDalProvider.FetchAll();
-            artiklLookupList = new List<Models.LookupModel>();
+            artiklLookupList = new List<FirmaBLL.Models.LookupModel>();
             foreach (var art in artiklList)
-                artiklLookupList.Add(new Models.LookupModel { ID = art.SifArtikla, Value = art.NazArtikla });
-            artiklLookupList.Add(new Models.LookupModel { ID = -1, Value = "-Odaberi artikl" });
+                artiklLookupList.Add(new FirmaBLL.Models.LookupModel { ID = art.SifArtikla, Value = art.NazArtikla });
+            artiklLookupList.Add(new FirmaBLL.Models.LookupModel { ID = -1, Value = "-Odaberi artikl" });
 
             // counter:
             TotalCountTextBlock.Text = fetchedDokumentList.Count.ToString();
@@ -214,9 +210,9 @@ namespace Firma.Views.Dokument
         {
             displayedId = currentId;
             currentDokument.CopyFromDTO(dokumentList[displayedId]);
-            currentStavkeList.Clear();
-            foreach (var stavka in currentDokument.Stavke)
-                currentStavkeList.Add(stavka);
+            //currentStavkeList.Clear();
+            //foreach (var stavka in currentDokument.Stavke)
+            //    currentStavkeList.Add(stavka);
         }
 
         #region Navigation Control
@@ -227,10 +223,10 @@ namespace Firma.Views.Dokument
             if (inEditMode)
             {
                 InEditMode = await CheckAndSaveChanges();
-                foreach (var item in currentStavkeList)
-                {
-                    item.InEditMode = inEditMode;
-                }
+                //foreach (var item in currentStavkeList)
+                //{
+                //    item.InEditMode = inEditMode;
+                //}
                 if (inEditMode) return;
             }
             CurrentId -= 1;
@@ -243,10 +239,10 @@ namespace Firma.Views.Dokument
             if (inEditMode)
             {
                 InEditMode = await CheckAndSaveChanges();
-                foreach (var item in currentStavkeList)
-                {
-                    item.InEditMode = inEditMode;
-                }
+                //foreach (var item in currentStavkeList)
+                //{
+                //    item.InEditMode = inEditMode;
+                //}
                 if (inEditMode) return;
             }
             CurrentId += 1;
@@ -439,12 +435,12 @@ namespace Firma.Views.Dokument
             else
             {
                 currentDokument.CreateEmpty();
-                currentStavkeList.Clear();
-                foreach(var stavka in currentDokument.Stavke)
-                {
-                    stavka.InEditMode = true;
-                    currentStavkeList.Add(stavka);
-                }
+                //currentStavkeList.Clear();
+                //foreach(var stavka in currentDokument.Stavke)
+                //{
+                //    stavka.InEditMode = true;
+                //    currentStavkeList.Add(stavka);
+                //}
 
                 NavigationStackPanel.Visibility = Visibility.Collapsed;
                 EditDokumentButton.IsEnabled = false;
@@ -461,6 +457,11 @@ namespace Firma.Views.Dokument
         private void NewStavkaButton_Click(object sender, RoutedEventArgs e)
         {
             currentDokument.Stavke.Add(new Models.StavkaLookupModel(artiklLookupList) { InEditMode = true });
+        }
+
+        private void DeleteStavkaButton_Click(object sender, RoutedEventArgs e)
+        {
+            var current = ((sender as Button).Tag as Models.StavkaLookupModel);
         }
     }
 }

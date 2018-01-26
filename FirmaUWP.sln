@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirmaDAL", "FirmaDAL\FirmaDAL.csproj", "{DA367024-E94D-4588-AB1D-D51AEBB4D558}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firma", "Firma\Firma.csproj", "{DA25BBDE-277C-472C-B1F3-73C5963BCF3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirmaBLL", "FirmaBLL\FirmaBLL.csproj", "{C2EC94DA-9D7D-4883-B7EE-AD776990E537}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,22 @@ Global
 		{DA25BBDE-277C-472C-B1F3-73C5963BCF3E}.Release|x86.ActiveCfg = Release|x86
 		{DA25BBDE-277C-472C-B1F3-73C5963BCF3E}.Release|x86.Build.0 = Release|x86
 		{DA25BBDE-277C-472C-B1F3-73C5963BCF3E}.Release|x86.Deploy.0 = Release|x86
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|ARM.Build.0 = Debug|ARM
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|x64.ActiveCfg = Debug|x64
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|x64.Build.0 = Debug|x64
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|x86.ActiveCfg = Debug|x86
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Debug|x86.Build.0 = Debug|x86
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|ARM.ActiveCfg = Release|ARM
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|ARM.Build.0 = Release|ARM
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|x64.ActiveCfg = Release|x64
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|x64.Build.0 = Release|x64
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|x86.ActiveCfg = Release|x86
+		{C2EC94DA-9D7D-4883-B7EE-AD776990E537}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

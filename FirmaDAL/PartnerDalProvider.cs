@@ -154,6 +154,7 @@ namespace FirmaDAL
                 {
                     Osoba osoba = new Osoba
                     {
+                        
                         ImeOsobe = (string)row["ImeOsobe"],
                         PrezimeOsobe = (string)row["PrezimeOsobe"],
                         IdPartnera = (int)row["IdPartnera"],
@@ -168,32 +169,6 @@ namespace FirmaDAL
                 }
                 return partnerList;
             }
-            //string query = "SELECT * FROM Partner";
-            //DataTable result = QueryExecutor.ExecuteQuery(query);
-            //if (result.Rows.Count < 1)
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    List<Partner> partnerList = new List<Partner>();
-
-            //    foreach(DataRow row in result.Rows)
-            //    {
-            //        Partner partner = new Partner
-            //        {
-            //            IdPartnera = (int)row["IdPartnera"],
-            //TipPartnera = (string)row["TipPartnera"],
-            //            OIB = (string)row["OIB"],
-            //            IdMjestaPartnera = (int?)(row["IdMjestaPartnera"] == DBNull.Value ? null : row["IdMjestaPartnera"]),
-            //            AdrPartnera = (string)(row["AdrPartnera"] == DBNull.Value ? string.Empty : row["AdrPartnera"]),
-            //            IdMjestaIsporuke = (int?)(row["IdMjestaIsporuke"] == DBNull.Value ? null : row["IdMjestaIsporuke"]),
-            //            AdrIsporuke = (string)(row["AdrIsporuke"] == DBNull.Value ? string.Empty : row["AdrIsporuke"])
-            //        };
-            //        partnerList.Add(partner);
-            //    }
-            //    return partnerList;
-            //}
         }
 
         public Partner FetchAtPosition<TKey>(int position)
@@ -276,6 +251,23 @@ namespace FirmaDAL
                 }
             }
             return res;
+        }
+
+        public static Partner GenerateEmpty()
+        {
+            Partner partner = new Osoba
+            {
+                IdPartnera = 0,
+                ImeOsobe = string.Empty,
+                PrezimeOsobe = string.Empty,
+                IdMjestaIsporuke = -1,
+                AdrIsporuke = string.Empty,
+                IdMjestaPartnera = -1,
+                TipPartnera = "O",
+                AdrPartnera = string.Empty,
+                OIB = string.Empty
+            };
+            return partner;
         }
     }
 }

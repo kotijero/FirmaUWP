@@ -61,7 +61,7 @@
                           Label="Odustani"
                           Icon="Cancel"/>
             <AppBarButton Name="NewDokumentButton"
-                          Label="New"
+                          Label="Novi dokument"
                           Icon="Add"
                           Click="NewDokumentButton_Click"/>
         </CommandBar>
@@ -233,13 +233,17 @@
                                  Width="150"
                                  IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
                         <TextBox Text="{x:Bind PostoRabat}"
-                                 Width="130"/>
+                                 Width="130"
+                                 IsEnabled="{x:Bind InEditMode, Mode=OneWay}"/>
                         <TextBlock Text="{x:Bind Ukupno, Mode=OneWay}"
                                    Width="150"/>
-                        <Button Content="X"
+                        <Button Name="DeleteStavkaButton"
+                                Content="X"
                                 ToolTipService.ToolTip="Izbriši stavku"
                                 IsEnabled="{x:Bind InEditMode, Mode=OneWay}"
-                                Foreground="Red"/>
+                                Foreground="Red"
+                                Tag="{Binding}"
+                                Click="DeleteStavkaButton_Click"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Firma.Models
+namespace FirmaBLL.Models
 {
     public class LookupModel
     {
@@ -53,6 +53,6 @@ namespace Firma.Models
         {
             //this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using FirmaDAL;
+﻿using FirmaBLL.Models;
+using FirmaDAL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -212,6 +213,7 @@ namespace Firma.Models
                 if (!currentArtiklLookup.Equals(value))
                 {
                     currentArtiklLookup = value;
+                    if (artiklList.Where(t => t.SifArtikla == currentArtiklLookup.ID).Count() > 0)
                     Artikl = artiklList.Where(t => t.SifArtikla == currentArtiklLookup.ID).Single();
                     JedCijArtikla = artikl.CijArtkila;
                     if (!inInitMode)

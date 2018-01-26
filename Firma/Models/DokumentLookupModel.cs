@@ -1,4 +1,5 @@
-﻿using FirmaDAL;
+﻿using FirmaBLL.Models;
+using FirmaDAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace Firma.Models
     public class DokumentLookupModel : INotifyPropertyChanged
     {
         #region Constructors
-        public DokumentLookupModel(List<LookupModel> partnerLookupList, List<Models.LookupModel> dokumentLookupList, List<Models.LookupModel> artiklLookupList, List<Artikl> artiklList)
+        public DokumentLookupModel(List<LookupModel> partnerLookupList, List<LookupModel> dokumentLookupList, List<LookupModel> artiklLookupList, List<Artikl> artiklList)
         {
             this.PartnerLookupList = partnerLookupList;
             this.DokumentLookupList = dokumentLookupList;
@@ -25,7 +26,7 @@ namespace Firma.Models
             this.Stavke = new ObservableCollection<StavkaLookupModel>();
         }
 
-        public DokumentLookupModel(Dokument dokument, List<LookupModel> partnerLookupList, List<Models.LookupModel> dokumentLookupList, List<Models.LookupModel> artiklLookupList, List<Artikl> artiklList)
+        public DokumentLookupModel(Dokument dokument, List<LookupModel> partnerLookupList, List<LookupModel> dokumentLookupList, List<LookupModel> artiklLookupList, List<Artikl> artiklList)
         {
             this.PartnerLookupList = partnerLookupList;
             this.DokumentLookupList = dokumentLookupList;
@@ -167,7 +168,7 @@ namespace Firma.Models
 
         public virtual ICollection<DokumentLookupModel> Dokument1 { get; set; }
         public virtual DokumentLookupModel PrethodniDokument { get; set; }
-        public virtual Partner Partner { get; set; }
+        public virtual FirmaDAL.Partner Partner { get; set; }
         public virtual ObservableCollection<StavkaLookupModel> Stavke
         {
             get { return stavke; }
