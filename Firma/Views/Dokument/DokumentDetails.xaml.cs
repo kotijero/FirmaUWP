@@ -60,6 +60,7 @@ namespace Firma.Views.Dokument
         private List<FirmaBLL.Models.LookupModel> partnerLookupList;
         private List<FirmaBLL.Models.LookupModel> dokumentLookupList;
         private List<FirmaBLL.Models.LookupModel> artiklLookupList;
+        private List<FirmaDAL.Artikl> artiklList;
 
         #endregion
 
@@ -161,7 +162,7 @@ namespace Firma.Views.Dokument
             // artikl lookup:
             FirmaDAL.ArtiklDalProvider artiklDalProvider = new FirmaDAL.ArtiklDalProvider();
             //var artiklDict = artiklDalProvider.FetchLookup();
-            var artiklList = artiklDalProvider.FetchAll();
+            artiklList = artiklDalProvider.FetchAll();
             artiklLookupList = new List<FirmaBLL.Models.LookupModel>();
             foreach (var art in artiklList)
                 artiklLookupList.Add(new FirmaBLL.Models.LookupModel { ID = art.SifArtikla, Value = art.NazArtikla });
@@ -177,6 +178,7 @@ namespace Firma.Views.Dokument
 
             SaveDokumentButton.Visibility = Visibility.Collapsed;
             CancelDokumentButton.Visibility = Visibility.Collapsed;
+            NewStavkaButton.Visibility = Visibility.Collapsed;
 
             UpdateNavigation(null, null);
         }
@@ -456,12 +458,13 @@ namespace Firma.Views.Dokument
 
         private void NewStavkaButton_Click(object sender, RoutedEventArgs e)
         {
-            currentDokument.Stavke.Add(new Models.StavkaLookupModel(artiklLookupList) { InEditMode = true });
+            currentDokument.Stavke.Add(new Models.StavkaLookupModel(null, artiklLookupList, artiklList) { InEditMode = true, InInitMode = false });
         }
 
         private void DeleteStavkaButton_Click(object sender, RoutedEventArgs e)
         {
             var current = ((sender as Button).Tag as Models.StavkaLookupModel);
+            currentDokument.Stavke.Remove(current);
         }
     }
 }

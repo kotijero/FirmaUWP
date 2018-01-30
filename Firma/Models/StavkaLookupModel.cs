@@ -34,14 +34,21 @@ namespace Firma.Models
         public StavkaLookupModel(Stavka stavka, List<LookupModel> artiklLookupList, List<Artikl> artiklList)
         {
             ArtiklLookupList = artiklLookupList;
-
-            idStavke = stavka.IdStvke;
-            idDokumenta = stavka.IdDokumenta;
-            sifArtikla = stavka.SifArtikla;
-            kolArtikla = stavka.KolArtikla;
-            jedCijArtikla = stavka.JedCijArtikla;
-            postoRabat = stavka.PostoRabat;
-            artikl = stavka.Artikl;
+            if (stavka != null)
+            {
+                idStavke = stavka.IdStvke;
+                idDokumenta = stavka.IdDokumenta;
+                sifArtikla = stavka.SifArtikla;
+                kolArtikla = stavka.KolArtikla;
+                jedCijArtikla = stavka.JedCijArtikla;
+                postoRabat = stavka.PostoRabat;
+                artikl = stavka.Artikl;
+            }
+            else
+            {
+                sifArtikla = -1;
+                
+            }
 
             inEditMode = false;
             inInitMode = true;
@@ -165,6 +172,8 @@ namespace Firma.Models
                 OnPropertyChanged();
             }
         }
+
+        public bool InInitMode { set { inInitMode = value; } }
 
         #region Forwarded Properties
 

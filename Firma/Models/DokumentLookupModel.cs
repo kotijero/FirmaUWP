@@ -255,13 +255,13 @@ namespace Firma.Models
 
             partnerLookup = PartnerLookupList.Where(t => t.ID == -1).Single();
             dokumentLookup = DokumentLookupList.Where(t => t.ID == -1).Single();
-
+            
             OnPropertyChanged("PartnerLookup");
             OnPropertyChanged("DokumentLookup");
             DatDokumenta = DateTime.Now;
 
             Stavke.Clear();
-            Stavke.Add(new Models.StavkaLookupModel(ArtiklLookupList));
+            Stavke.Add(new Models.StavkaLookupModel(null, ArtiklLookupList, artiklList) { InEditMode = true, InInitMode = false });
         }
     }
 }
